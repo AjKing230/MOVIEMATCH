@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommended Movies</title>
+</head>
+<body>
+    <h1>Recommended Movies</h1>
+    <div>
+        {% for name, poster in zip(movie_names, movie_posters) %}
+            <h2>{{ name }}</h2>
+            <img src="{{ poster }}" alt="{{ name }}">
+            <br><br>
+        {% endfor %}
+    </div>
+</body>
+</html>
