@@ -1,5 +1,4 @@
 **MOVIEMATCH**
-# Movie Recommendation System
 
 This Movie Recommendation System is designed to help users discover movies based on their preferences. It utilizes machine learning algorithms and Flask for the backend to provide personalized movie recommendations.
 
