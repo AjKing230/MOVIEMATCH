@@ -4,6 +4,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import ast
 import pickle
+import nltk
+from nltk.stem.porter import PorterStemmer
 
 # Load the datasets
 movies = pd.read_csv('tmdb_5000_movies.csv')
@@ -54,6 +56,17 @@ movies['overview'] = movies['overview'].fillna('')
 # Combine the columns into a single 'tags' column
 movies['tags'] = movies['overview'] + " " + movies['genres'].apply(lambda x: " ".join(x)) + " " + movies['keywords'].apply(lambda x: " ".join(x)) + " " + movies['cast'].apply(lambda x: " ".join(x)) + " " + movies['crew'].apply(lambda x: " ".join(x))
 
+ps = PorterStemmer()
+
+def stem(text):
+    y = []
+    for i in text.split():
+        y.append(ps.stem(i))
+    return " ".join(y)
+
+# Apply stemming to the 'tags' column
+movies['tags'] = movies['tags'].apply(stem)
+
 # Create a new dataframe with selected columns
 new = movies[['movie_id', 'title', 'tags']].copy()
 
@@ -67,3 +80,4 @@ similarity = cosine_similarity(vectors)
 # Save the movie list and similarity matrix
 pickle.dump(new['title'].values, open('movie_list.pkl', 'wb'))
 pickle.dump(similarity, open('similarity.pkl', 'wb'))
+
